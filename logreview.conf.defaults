@@ -1,0 +1,28 @@
+# This file is part of https://github.com/TechnologyClassroom/LogReview
+
+# This is a template configuration file for logreview.sh. If a configuration
+# file does not exist, cp this file to make changes like so:
+#   cp logreview.conf.defaults logreview.conf
+
+# What is the log file(s) used for logs?
+logfile=/var/log/nginx/access.log
+#logfile2=/var/log/nginx/access.log.1
+
+# Customization of number values.
+# What column is the IP address in? (Needs $ before it.)
+ipcol=$1
+# syslog is usually $6 and nginx and apache2 are usually $1 or $2.
+# How many log files do you have? 1 or 2
+logs=1
+# How many of the most frequently hits should be shown?
+topipcount=10
+# How many user agents should be shown per IP?
+topuacount=3
+# How many URLs should be shown per IP?
+topurlcount=3
+# How many of the total most frequently user-agents should be shown?
+topuatotalcount=10
+# What type of compression is used for rotated logs? bz or gzip?
+compressiontype=gzip
+# What type of log is used? apache, nginx, or syslog?
+logtype=nginx
