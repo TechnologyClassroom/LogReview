@@ -9,7 +9,11 @@ at this point. More complete projects include
 [apachetop](https://github.com/tessus/apachetop), but this is good in some ways
 too.
 
-This script pairs well with some of my other scripts.
+LogReview pairs well with my
+[firewallblockgen](https://github.com/TechnologyClassroom/firewallblockgen/)
+scripts to identify larger patterns and block addresses in bulk.
+
+LogReview can be found at https://github.com/TechnologyClassroom/LogReview/
 
 ## Limits
 
