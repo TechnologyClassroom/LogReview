@@ -188,9 +188,11 @@ for i in $(catlog \
 done
 
 echo
+echo "Top user-agents:"
 # Top user-agents
 catlog \
   | grepinclusion \
+  | grepexclusion \
   | awk -F'"' '{print $(NF>1?NF-1:"")}' \
   | sucsn \
   | tail -n "$topuatotalcount"
