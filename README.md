@@ -32,11 +32,11 @@ LogReview may not help when...
 
 You put it on a server.
 
-    git clone https://github.com/TechnologyClassroom/LogReview
+    git clone https://github.com/TechnologyClassroom/LogReview logreview
 
 Change to the directory.
 
-    cd LogReview
+    cd logreview
 
 Copy the template configuration file:
 
@@ -55,4 +55,4 @@ individual addresses with unwanted behavior or use tools to modify unwanted
 behavior.
 
 After taking action or recognizing known behavior, you can add addresses to the
-TMPBLOCK line to dig deeper.
+`TMPBLOCK` line to dig deeper.
