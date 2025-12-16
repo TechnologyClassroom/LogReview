@@ -23,6 +23,6 @@ topurlcount=3
 # How many of the total most frequently user-agents should be shown?
 topuatotalcount=10
 # What type of compression is used for rotated logs? bz or gzip?
-compressiontype=gzip
+#compressiontype=gzip
 # What type of log is used? apache, nginx, or syslog?
 logtype=nginx
