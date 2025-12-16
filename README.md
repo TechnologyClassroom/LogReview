@@ -11,7 +11,10 @@ too.
 
 LogReview pairs well with my
 [firewallblockgen](https://github.com/TechnologyClassroom/firewallblockgen/)
-scripts to identify larger patterns and block addresses in bulk.
+scripts to identify larger patterns and block addresses in bulk. For
+automated handling, I recommend using
+[reaction with ipset](https://reaction.ppom.me/actions/ipset.html) instead of
+fail2ban.
 
 LogReview can be found at https://github.com/TechnologyClassroom/LogReview/
 
