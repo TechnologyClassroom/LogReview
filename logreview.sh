@@ -5,6 +5,8 @@
 # handy for quickly finding what behavior might be slowing down popular web
 # servers.
 #
+# Version 20251218
+#
 # Copyright (C) 2024-2025 Michael McMahon
 #
 # This program is free software: you can redistribute it and/or modify
