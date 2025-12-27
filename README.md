@@ -43,7 +43,7 @@ Change to the directory.
 
 Copy the template configuration file:
 
-    cp logreview.conf.default logreview.conf
+    cp logreview.conf.defaults logreview.conf
 
 Change the config file to match your log.
 
