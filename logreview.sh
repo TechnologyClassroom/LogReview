@@ -5,9 +5,9 @@
 # handy for quickly finding what behavior might be slowing down popular web
 # servers.
 #
-# Version 20251218
+# Version 20260116
 #
-# Copyright (C) 2024-2025 Michael McMahon
+# Copyright (C) 2024-2026 Michael McMahon
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -199,9 +199,21 @@ catlog \
   | sucsn \
   | tail -n "$topuatotalcount"
 
-# Disabling because these are 403 now. 20250404
+echo
+echo "Top user-agents with grouped versions:"
+# Top user-agents with grouped versions to potentially identify random number
+# generators being used on the version value to intentionally stay undetected.
+catlog \
+  | grepinclusion \
+  | grepexclusion \
+  | awk -F'"' '{print $(NF>1?NF-1:"")}' \
+  | `# Group randomized versions.` sed 's/\/[0-9]*\./\/wildcard\./g' \
+  | sucsn \
+  | tail -n "$topuatotalcount"
+
+# Disabling because I configure these to give 403 now. 20250404
 #echo
-#echo "Top no UA"
+#echo "Top no UA:"
 #for i in $(catlog \
 #  | grepinclusion \
 #  | grep -E '"-"$' \
@@ -246,7 +258,7 @@ catlog \
 # Apache Mod Evasive
 #if [ -f /etc/apache2/mods-enabled/evasive.conf ]; then
 #  echo
-#  echo "Top apache2 mod evasive"
+#  echo "Top apache2 mod evasive:"
 #  for i in $(cat /var/log/syslog \
 #    | grep "possible DoS attack" \
 #    | sed 's/^.* Blacklisting address //g;s/: possible DoS attack.$//g' \
