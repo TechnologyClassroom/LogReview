@@ -5,7 +5,7 @@
 # handy for quickly finding what behavior might be slowing down popular web
 # servers.
 #
-# Version 20260116
+# Version 20260130
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -110,6 +110,9 @@ grepinclusion () {
   fi
 }
 
+# You can throw this into grepinclusion to isolate to a specific hour.
+#  | grep "Jan 14 09:" `# Temp` \
+
 # These are exclusions to drop from log results.
 # Some of these are known good.
 # Some of these have already been blocked.
@@ -136,10 +139,8 @@ sucsn () {
   | sort -n
 }
 
-# You can throw this into grepinclusion to isolate to a specific hour.
-#  | grep "Jan 14 09:" `# Temp` \
-
 echo "Searching through logs. This may take a moment..."
+
 # Find top hitting IPs with exclusions for known entities.
 for i in $(catlog \
   | grepinclusion \
@@ -189,9 +190,9 @@ for i in $(catlog \
     | tail -n "$topurlcount"
 done
 
+# Top user-agents
 echo
 echo "Top user-agents:"
-# Top user-agents
 catlog \
   | grepinclusion \
   | grepexclusion \
@@ -199,10 +200,10 @@ catlog \
   | sucsn \
   | tail -n "$topuatotalcount"
 
-echo
-echo "Top user-agents with grouped versions:"
 # Top user-agents with grouped versions to potentially identify random number
 # generators being used on the version value to intentionally stay undetected.
+echo
+echo "Top user-agents with grouped versions:"
 catlog \
   | grepinclusion \
   | grepexclusion \
@@ -300,6 +301,7 @@ catlog \
 #  done
 #fi
 
+# WordPress abuse
 #echo -e "\nThese addresses look like they are all wordpress abuse:"
 ##catalllog \
 #catlog \
@@ -330,7 +332,7 @@ catlog \
 #  | grepexclusion \
 #  | sucsn
 
-# fail2ban
+# Repeat offenders from fail2ban
 if [ -f /var/log/fail2ban.log ]; then
   echo
   echo "Repeat IPs from fail2ban ban logs:"
