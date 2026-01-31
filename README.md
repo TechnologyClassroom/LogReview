@@ -3,6 +3,11 @@
 `logreview.sh` is a script that is useful for manually reviewing logs from
 popular web servers to quickly find abuse patterns.
 
+For a visual demo of how I use LogReview in context with my other tools,
+watch my presentation
+[How to fight DDoS attacks from the command line from BSides CT 2025](https://www.youtube.com/watch?v=BREJ58Y2Ez0)
+for a more complete picture of the process I use to thwart attacks.
+
 It is still a work-in-progress (WIP), but it is functional enough that it helps
 at this point. More complete projects include
 [goaccess](https://github.com/allinurl/goaccess/) and
@@ -32,12 +37,6 @@ LogReview may not help when...
 * ...slowloris attacks are used.
 
 ## How to use logreview.sh
-
-For a visual tour of how I use LogReview in context with my other tools,
-watch my presentation
-[How to fight DDoS attacks from the command line from BSides CT 2025](https://www.youtube.com/watch?v=BREJ58Y2Ez0)
-for a more complete picture of the process that also includes a live
-demo of LogReview.
 
 Place the LogReview on a server.
 
