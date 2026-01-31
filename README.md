@@ -4,8 +4,8 @@
 popular web servers to quickly find abuse patterns.
 
 For a visual demo of how I use LogReview in context with my other tools,
-watch my presentation
-[How to fight DDoS attacks from the command line from BSides CT 2025](https://www.youtube.com/watch?v=BREJ58Y2Ez0)
+watch my BSides CT 2025 presentation
+[How to fight DDoS attacks from the command line](https://www.youtube.com/watch?v=BREJ58Y2Ez0)
 for a more complete picture of the process I use to thwart attacks.
 
 It is still a work-in-progress (WIP), but it is functional enough that it helps
