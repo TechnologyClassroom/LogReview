@@ -33,6 +33,12 @@ LogReview may not help when...
 
 ## How to use logreview.sh
 
+For a visual tour of how I use LogReview in context with my other tools,
+watch my presentation
+[How to fight DDoS attacks from the command line from BSides CT 2025](https://www.youtube.com/watch?v=BREJ58Y2Ez0)
+for a more complete picture of the process that also includes a live
+demo of LogReview.
+
 Place the LogReview on a server.
 
     git clone https://github.com/TechnologyClassroom/LogReview logreview
