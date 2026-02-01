@@ -74,6 +74,11 @@ yourself such as [Uptime Kuma](https://uptime.kuma.pet/),
 Place these addresses and or user-agents under the `grepexclusion` section of
 `logreview.sh` to exclude known good results.
 
+I would recommend taking notes on the research that you find. You will likely
+see patterns over time and you may forget the decisions that you previously
+made. Sometimes your decisions may change over time based on new information
+that is contrary to how a service presents itself.
+
 After taking action or recognizing known behavior, you can add addresses to the
 `TMPBLOCK` line to continue digging deeper.
 
@@ -97,6 +102,11 @@ After taking action or recognizing known behavior, you can add addresses to the
       engine bot while not really having a functional search engine. This is
       one tactic used by companies building datasets for training generative
       AI models.
+    - Sometimes I have seen bad bots impersonating one of the major search
+      engines by using their exact same user-agents so I would recommend
+      avoiding the exclusion of their user-agents from results. Many of the
+      major search engines provide documentation of verifying the authenticity
+      of their bots.
   - Common Crawl (CCBot) is an attempt at crawling the entire web collectively
     so that every single company crawling the web could stop and just download
     the latest Common Crawl archive. Having one bot hit your site would be
