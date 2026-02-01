@@ -23,7 +23,8 @@ automated handling, I recommend using the configuration I submitted as a PR for
 [reaction with ipset](https://reaction.ppom.me/actions/ipset.html) instead of
 fail2ban.
 
-LogReview can be found at https://github.com/TechnologyClassroom/LogReview/
+LogReview lives in the <https://github.com/TechnologyClassroom/LogReview/>
+repository.
 
 ## Limits
 
