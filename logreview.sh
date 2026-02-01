@@ -2,7 +2,7 @@
 
 # LogReview gives a quick overview of recent web server traffic, their IP
 # addresses, their user-agents, and the URLs that they visited. LogReview is
-# handy for quickly finding what behavior might be slowing down popular web
+# useful for quickly finding what behavior might be slowing down popular web
 # servers.
 #
 # Version 20260130
@@ -23,12 +23,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # LogReview source lives at https://github.com/TechnologyClassroom/LogReview
+# along with documentation on how to use LogReview.
 
 set -euo pipefail
 #set -euxo pipefail  # DEBUG
 
-# Variables are set in the logreview.conf file with
-# logreview.conf.defaults as defaults.
+# Variables are set in the logreview.conf file with the
+# logreview.conf.defaults file containing suggested defaults.
 
 # LogReview depends on these programs: Bash, grep, echo, head, cut, tail, cat,
 # bzcat, zcat, sort, uniq, awk, sed, tee
