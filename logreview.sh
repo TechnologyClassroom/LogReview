@@ -344,7 +344,7 @@ if [ -f /var/log/fail2ban.log ]; then
     | uniq -c \
     | sort -n \
     | awk '$1 > 1' \
-    | tee /tmp/repeat-fail2ban-offenders-$(date +%Y%m%d).txt
+    | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt
 fi
 
 exit 0
