@@ -74,9 +74,9 @@ logtype="$(config_get logtype)"
 # Print logs to work on.
 # Quick refactor for both 1 and 2 logs.
 catlog () {
-  if [ $logs -eq 1 ]; then
+  if [ "$logs" -eq 1 ]; then
     cat "$logfile"
-  elif [ $logs -eq 2 ]; then
+  elif [ "$logs" -eq 2 ]; then
     cat "$logfile" "$logfile2"
   else
     echo "logs must be set to either 1 or 2."
