@@ -1,11 +1,11 @@
 #!/bin/bash
 
+# logreview.sh
 # LogReview gives a quick overview of recent web server traffic, their IP
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-#
-# Version 20260130
+# Version 20260201
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
