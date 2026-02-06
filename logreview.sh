@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260201
+# Version 20260205
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -32,7 +32,7 @@ set -euo pipefail
 # logreview.conf.defaults file containing suggested defaults.
 
 # LogReview depends on these programs: Bash, grep, echo, head, cut, tail, cat,
-# bzcat, zcat, sort, uniq, awk, sed, tee
+# bzcat, zcat, sort, uniq, awk, sed, tee, date
 
 # Variable load code is from an anonymous SE user.
 # https://unix.stackexchange.com/a/331965/553861
