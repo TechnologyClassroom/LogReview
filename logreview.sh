@@ -140,7 +140,10 @@ sucsn () {
   | sort -n
 }
 
-echo "Searching through logs. This may take a moment..."
+# Print the date.
+date
+
+echo -e "\nSearching through logs. This may take a moment..."
 
 # Find top hitting IPs with exclusions for known entities.
 for i in $(catlog \
@@ -151,9 +154,8 @@ for i in $(catlog \
   | tail -n "$topipcount" \
   | awk '{ print $2 }'); do
 
-  echo
   # Display hit count and IP address.
-  echo "Count of IP address:"
+  echo -e "\nCount of IP address:"
   catlog \
     | grep "$i" \
     | grepinclusion \
@@ -192,8 +194,7 @@ for i in $(catlog \
 done
 
 # Top user-agents
-echo
-echo "Top user-agents:"
+echo -e "\nTop user-agents:"
 catlog \
   | grepinclusion \
   | grepexclusion \
@@ -203,8 +204,7 @@ catlog \
 
 # Top user-agents with grouped versions to potentially identify random number
 # generators being used on the version value to intentionally stay undetected.
-echo
-echo "Top user-agents with grouped versions:"
+echo -e "\nTop user-agents with grouped versions:"
 catlog \
   | grepinclusion \
   | grepexclusion \
@@ -214,8 +214,7 @@ catlog \
   | tail -n "$topuatotalcount"
 
 # Disabling because I configure these to give 403 now. 20250404
-#echo
-#echo "Top no UA:"
+#echo -e "\nTop no UA:"
 #for i in $(catlog \
 #  | grepinclusion \
 #  | grep -E '"-"$' \
@@ -259,8 +258,7 @@ catlog \
 
 # Apache Mod Evasive
 #if [ -f /etc/apache2/mods-enabled/evasive.conf ]; then
-#  echo
-#  echo "Top apache2 mod evasive:"
+#  echo -e "\nTop apache2 mod evasive:"
 #  for i in $(cat /var/log/syslog \
 #    | grep "possible DoS attack" \
 #    | sed 's/^.* Blacklisting address //g;s/: possible DoS attack.$//g' \
@@ -324,8 +322,7 @@ catlog \
 #  | sort \
 #  | uniq
 
-#echo
-#echo "Fell into the trap."
+#echo -e "\nFell into the trap."
 ##catalllog \
 #catlog \
 #  | grep "/trap/" \
@@ -335,8 +332,7 @@ catlog \
 
 # Repeat offenders from fail2ban
 if [ -f /var/log/fail2ban.log ]; then
-  echo
-  echo "Repeat IPs from fail2ban ban logs:"
+  echo -e "\nRepeat IPs from fail2ban ban logs:"
   zcat -f /var/log/fail2ban.log* \
     | grep " Ban " \
     | sed 's/^.* Ban //g' \
@@ -346,5 +342,8 @@ if [ -f /var/log/fail2ban.log ]; then
     | awk '$1 > 1' \
     | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt
 fi
+
+# Print the date.
+date
 
 exit 0
