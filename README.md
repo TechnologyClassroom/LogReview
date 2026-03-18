@@ -35,8 +35,11 @@ LogReview may not help when...
   radar" of log analysis by rotating quickly through IPs. The top user-agent
   results in logreview.sh may still identify patterns here.
 * ...user-agent are intentionally randomized. A more thorough review of all
-  user-agents may help discover further patterns of abnormalities.
+  user-agents may help discover further patterns of abnormalities. The top
+  user-agent with wildcard results in logreview.sh may still identify
+  patterns here.
 * ...large files are used to hog bandwidth. apachetop or GoAccess help here.
+* ...one is looking for a general metrics and analytics solution.
 * ...slowloris attacks are used.
 
 ## How to use logreview.sh
@@ -123,4 +126,3 @@ After taking action or recognizing known behavior, you can add addresses to the
   [FirewallBlockGen](https://github.com/TechnologyClassroom/firewallblockgen/)
   to find out more about where the requests are coming from. You will likely
   find that it is a bot that does not identify itself.
-
