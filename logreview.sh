@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260205
+# Version 20260320
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -339,7 +339,7 @@ if [ -f /var/log/fail2ban.log ]; then
     | sed 's/^.* Ban //g' \
     | sucsn \
     | awk '$1 > 1' \
-    | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt
+    | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt \
     | tail -n "$topipcount"
 fi
 
