@@ -332,15 +332,15 @@ catlog \
 
 # Repeat offenders from fail2ban
 if [ -f /var/log/fail2ban.log ]; then
-  echo -e "\nRepeat IPs from fail2ban ban logs:"
+  echo -e "\nfail2ban.log found. Consider migrating to reaction (reaction.ppom.me)."
+  echo "Repeat IPs from fail2ban ban logs:"
   zcat -f /var/log/fail2ban.log* \
     | grep " Ban " \
     | sed 's/^.* Ban //g' \
-    | sort \
-    | uniq -c \
-    | sort -n \
+    | sucsn \
     | awk '$1 > 1' \
     | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt
+    | tail -n "$topipcount"
 fi
 
 # Print the date.
