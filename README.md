@@ -264,7 +264,8 @@ these are light `HEAD` requests. If you find any file extensions from scanners
 like that that you never use, you can add them to your `fail2ban` or `reaction`
 configuration. For example, if a scan searches for `.rar` files and you only
 use `.zip` and `.tar.gz` archives, you can ban addresses that try to download
-`.rar` files.
+`.rar` files. I left the requests for only this entry mostly unredacted, but I
+did leave out some identifying information that would reveal the domain.
 
 The 2nd, 3rd, 4th, 6th, 8th, 9th, 10th most frequent IPs all follow the same
 crawler pattern. This is the problem the server faced and must be stopped
@@ -280,9 +281,10 @@ script from
 [FirewallBlockGen](https://github.com/TechnologyClassroom/firewallblockgen/) to
 find out more about where the requests are coming from.
 
-The third pattern from the top most frequent IPs is Amazon Kendra. I would
-suggest adding a filter in the web server configuration to return a 403 when
-the user-agent matches the `^amazon-Quick-on-behalf-of-.*$` pattern.
+The 5th and 7th most frequent IPs is allegedly Amazon Kendra, a private search
+engine with AI service. I would suggest adding a filter in the web server
+configuration to return a 403 when the user-agent matches the
+`^amazon-Quick-on-behalf-of-.*$` pattern.
 
 Looking at the `Top user-agents:` and `Top user-agents with grouped versions:`
 sections is not all that interesting with this example, but it can be. These
