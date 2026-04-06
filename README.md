@@ -44,6 +44,8 @@ LogReview may not help when...
 
 ## How to use logreview.sh
 
+### Installation, configuration, and run
+
 Place LogReview on a server the first time you are configuring LogReview.
 
     git clone https://github.com/TechnologyClassroom/LogReview logreview
@@ -70,6 +72,236 @@ Run the script.
 The output should help get a glimpse of what is happening. Potentially block
 individual addresses with unwanted behavior or use tools to modify unwanted
 behavior.
+
+### Reading the output
+
+Here is an example of the output of LogReview redacted from a real run. The IP
+addresses and requests have been redacted, but the user-agents and quantities
+are real.
+
+```
+Mon Apr  6 11:05:49 EDT 2026
+
+Searching through logs. This may take a moment...
+
+Count of IP address:
+   5995 192.168.2.188
+Top 3 user-agents:
+   1159 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1360 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1414 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+     18 GET /redacted/index.html
+     18 GET /redacted/index.html
+   1308 GET /redacted/index.html
+
+Count of IP address:
+   6076 192.168.2.134
+Top 3 user-agents:
+   1211 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1268 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1354 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+     18 GET /redacted/index.html
+     18 GET /redacted/index.html
+   1471 GET /redacted/index.html
+
+Count of IP address:
+   6130 192.168.2.8
+Top 3 user-agents:
+   1333 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1385 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1424 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+     18 GET /redacted/index.html
+     18 GET /redacted/index.html
+   1355 GET /redacted/index.html
+
+Count of IP address:
+   6229 192.168.50.4
+Top 3 user-agents:
+    630 amazon-Quick-on-behalf-of-664570f1
+    707 amazon-Quick-on-behalf-of-950399e0
+   1013 amazon-Quick-on-behalf-of-de796e21
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+    793 GET /redacted/index.html
+    795 GET /redacted/index.html
+    799 GET /redacted/index.html
+
+Count of IP address:
+   6927 192.168.2.52
+Top 3 user-agents:
+   1350 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1623 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1666 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+     18 GET /redacted/index.html
+     18 GET /redacted/index.html
+   1556 GET /redacted/index.html
+
+Count of IP address:
+   7180 192.168.50.2
+Top 3 user-agents:
+    494 amazon-Quick-on-behalf-of-c25aa9c3
+    871 amazon-Quick-on-behalf-of-28836b69
+   1417 amazon-Quick-on-behalf-of-34f4923b
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+    803 GET /redacted/index.html
+    813 GET /redacted/index.html
+    813 GET /redacted/index.html
+
+Count of IP address:
+   7340 192.168.2.39
+Top 3 user-agents:
+   1557 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1618 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   1648 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+     18 GET /redacted/index.html
+     18 GET /redacted/index.html
+   1425 GET /redacted/index.html
+
+Count of IP address:
+   9858 192.168.2.18
+Top 3 user-agents:
+   2186 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   2196 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   2289 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+     18 GET /redacted/index.html
+     24 GET /redacted/index.html
+   2270 GET /redacted/index.html
+
+Count of IP address:
+  10171  192.168.2.7
+Top 3 user-agents:
+   2238 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   2243 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+   2435 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Last 3 requested URLs:
+GET /redacted/index.html
+GET /redacted/index.html
+GET /redacted/index.html
+Top 3 requested URLs:
+      4 GET /redacted/index.html
+      6 GET /redacted/index.html
+   2699 GET /redacted/index.html
+
+Count of IP address:
+  51640 192.168.1.12
+Top 3 user-agents:
+   1078 Mozilla/5.0 (Macintosh; Intel Mac OS X 11_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.5304.62 Safari/537.36
+   1080 Mozilla/5.0 (Macintosh; Intel Mac OS X 12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.5563.111 Safari/537.36
+   1080 Mozilla/5.0 (Macintosh; Intel Mac OS X 13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.24
+Last 3 requested URLs:
+HEAD /0404.zip
+HEAD /0405.zip
+HEAD /0406.zip
+Top 3 requested URLs:
+      2 HEAD /www_202604.rar
+      2 HEAD /www_202604.tar.gz
+      2 HEAD /www_202604.zip
+
+Top user-agents:
+  38599 Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+  44923 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36
+  45215 Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0
+  47368 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+  49665 Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36
+  50243 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+  50707 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+  58599 Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.95 Safari/537.36 QIHU 360SE
+  97038 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36
+
+Top user-agents with grouped versions:
+  38650 Mozilla/wildcard.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/wildcard.0
+  44930 Mozilla/wildcard.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.3497.100 Safari/wildcard.36
+  45256 Mozilla/wildcard.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/wildcard.0
+  52433 Mozilla/wildcard.0 (Windows NT 10.0; Win64; x64) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.0.0 Safari/wildcard.36 Edg/wildcard.0.0.0
+  58599 Mozilla/wildcard.0 (Windows NT 10.0; WOW64) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.5359.95 Safari/wildcard.36 QIHU 360SE
+  66213 Mozilla/wildcard.0 (Linux; Android 10; K) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.0.0 Mobile Safari/wildcard.36
+ 102926 Mozilla/wildcard.0 (X11; Linux x86_64) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.0.0 Safari/wildcard.36
+ 173996 Mozilla/wildcard.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.0.0 Safari/wildcard.36
+ 274309 Mozilla/wildcard.0 (Windows NT 10.0; Win64; x64) AppleWebKit/wildcard.36 (KHTML, like Gecko) Chrome/wildcard.0.0.0 Safari/wildcard.36
+```
+
+Starting with the last entry `192.168.1.12` is a vulnerability scanner of some
+sort scanning for archives that are not linked from the site. The address can
+and should be blocked. This is not the problem with the site though because
+these are light `HEAD` requests. If you find any file extensions from scanners
+like that that you never use, you can add them to your `fail2ban` or `reaction`
+configuration. For example, if a scan searches for `.rar` files and you only
+use `.zip` and `.tar.gz` archives, you can ban addresses that try to download
+`.rar` files.
+
+The 2nd, 3rd, 4th, 6th, 8th, 9th, 10th most frequent IPs all follow the same
+crawler pattern. This is the problem the server faced and must be stopped
+through automation. `Chrome/120.0.0.0` was released in late 2023 and at the
+time of this writing in 2026 is about 2 and a half years old. On Windows and
+macOS systems, Chrome is kept automatically updated to the latest release so
+that is suspicious. The same addresses use equal parts Windows, macOS, and
+Linux which is suspicious. The same activity is coming from multiple IP
+addresses which is suspicious. You can go a step further by finding all of the
+IPs that match this pattern on your server and process them with my
+[ip-to-asn-info.sh](https://github.com/TechnologyClassroom/firewallblockgen/blob/main/ip-to-asn-info.sh)
+script from
+[FirewallBlockGen](https://github.com/TechnologyClassroom/firewallblockgen/) to
+find out more about where the requests are coming from.
+
+The third pattern from the top most frequent IPs is Amazon Kendra. I would
+suggest adding a filter in the web server configuration to return a 403 when
+the user-agent matches the `^amazon-Quick-on-behalf-of-.*$` pattern.
+
+Looking at the `Top user-agents:` and `Top user-agents with grouped versions:`
+sections is not all that interesting with this example, but it can be. These
+two lines do stand out though:
+
+```
+  44923 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36
+  58599 Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.95 Safari/537.36 QIHU 360SE
+```
+
+`Chrome/69.0.3497.100` was released in late 2018 and at the time of this
+writing in 2026 is about 8 years old. `Chrome/108.0.5359.95` was released in
+late 2022 and at the time of this writing in 2026 is about 3 and a half years
+old. On Windows and macOS systems, Chrome is kept automatically updated to the
+latest release so these are very suspicious.
+[imperva's 2025 Bad Bot Report](https://www.imperva.com/resources/wp-content/uploads/sites/6/reports/2025-Bad-Bot-Report.pdf)
+on page 34 recomends blocking user-agents of browsers that have been
+end-of-life for more than three years and giving a CAPTCHA to user-agents of
+browsers that have been end-of-life for more than two years.
 
 Make sure you do not take action against automation that you are running on
 your own site like the site monitoring processes that you may be running
