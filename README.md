@@ -281,10 +281,9 @@ script from
 [FirewallBlockGen](https://github.com/TechnologyClassroom/firewallblockgen/) to
 find out more about where the requests are coming from.
 
-The 5th and 7th most frequent IPs is allegedly Amazon Kendra, a private search
-engine with AI service. I would suggest adding a filter in the web server
-configuration to return a 403 when the user-agent matches the
-`^amazon-Quick-on-behalf-of-.*$` pattern.
+The 5th and 7th most frequent IPs is allegedly Amazon Quick. I would suggest
+adding a filter in the web server configuration to return a 403 when the
+user-agent matches the `^amazon-Quick-on-behalf-of-.*$` pattern.
 
 Looking at the `Top user-agents:` and `Top user-agents with grouped versions:`
 sections is not all that interesting with this example, but it can be. These
