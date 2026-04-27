@@ -65,6 +65,10 @@ which column the IPs are located.
 
     editor logreview.conf
 
+If you do not have any logs, you can use simulated data I made in the
+[web-server-mock-data](https://github.com/TechnologyClassroom/web-server-mock-data)
+repository.
+
 Run the script.
 
     bash logreview.sh
