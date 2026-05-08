@@ -80,6 +80,32 @@ The output should help get a glimpse of what is happening. Potentially block
 individual addresses with unwanted behavior or use tools to modify unwanted
 behavior.
 
+### Updating
+
+The current form is just a simple git repository so updating is simple.
+
+Change to the directory where logreview lives.
+
+    cd logreview
+
+Stash you changes if you made any.
+
+    git stash
+
+Retrieve the latest updates.
+
+    git fetch && git pull
+
+Place your changes back.
+
+    git stash pop
+
+If there is a merge conflict, resolve it.
+
+Run the new version of the script.
+
+    bash logreview.sh
+
 ### Reading the output
 
 Here is an example of the output of LogReview redacted from a real run. The IP
