@@ -91,6 +91,18 @@ Mon Apr  6 11:05:49 EDT 2026
 
 Searching through logs. This may take a moment...
 
+Top 10 IPs:
+192.168.2.188
+192.168.2.134
+192.168.2.8
+192.168.50.4
+192.168.2.52
+192.168.50.2
+192.168.2.39
+192.168.2.18
+192.168.2.7
+192.168.1.12
+
 Count of IP address:
    5995 192.168.2.188
 Top 3 user-agents:
