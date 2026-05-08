@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260320
+# Version 20260508
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -145,22 +145,30 @@ date
 
 echo -e "\nSearching through logs. This may take a moment..."
 
-# Find top hitting IPs with exclusions for known entities.
-for i in $(catlog \
+# Save top IP addresses and count as a variable.
+topips="$(catlog \
   | grepinclusion \
   | grepexclusion \
   | awk '{ print '"$ipcol"' }' \
   | sucsn \
-  | tail -n "$topipcount" \
+  | tail -n "$topipcount")"
+
+# Display top IP address.
+echo -e "\nTop $topipcount IPs:"
+echo "$(echo "$topips" | awk '{ print $2 }')"
+
+# Display top IP address with counts.
+#echo -e "\nTop $topipcount IPs with count:"
+#echo "$topips"
+
+# Find top hitting IPs with exclusions for known entities.
+for i in $(echo "$topips" \
   | awk '{ print $2 }'); do
 
   # Display hit count and IP address.
   echo -e "\nCount of IP address:"
-  catlog \
+  echo "$topips" \
     | grep "$i" \
-    | grepinclusion \
-    | awk '{ print '"$ipcol"' }' \
-    | sucsn \
     | tail -n 1
 
   # Show top user-agents.
@@ -332,15 +340,19 @@ catlog \
 
 # Repeat offenders from fail2ban
 if [ -f /var/log/fail2ban.log ]; then
-  echo -e "\nfail2ban.log found. Consider migrating to reaction (reaction.ppom.me)."
-  echo "Repeat IPs from fail2ban ban logs:"
-  zcat -f /var/log/fail2ban.log* \
-    | grep " Ban " \
-    | sed 's/^.* Ban //g' \
-    | sucsn \
-    | awk '$1 > 1' \
-    | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt \
-    | tail -n "$topipcount"
+  # Check if fail2ban.log has been modified in the last 24 hours.
+  if find /var/log/fail2ban.log -mtime -1 | LC_ALL=C grep -q '^'; then
+    echo -e "\nRecent fail2ban.log found."
+    echo "Consider migrating to reaction (reaction.ppom.me)."
+    echo "Repeat IPs from fail2ban ban logs:"
+    zcat -f /var/log/fail2ban.log* \
+      | grep " Ban " \
+      | sed 's/^.* Ban //g' \
+      | sucsn \
+      | awk '$1 > 1' \
+      | tee /tmp/repeat-fail2ban-offenders-"$(date +%Y%m%d)".txt \
+      | tail -n "$topipcount"
+  fi
 fi
 
 # Print the date.
