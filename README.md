@@ -69,6 +69,9 @@ If you do not have any logs, you can use simulated data I made in the
 [web-server-mock-data](https://github.com/TechnologyClassroom/web-server-mock-data)
 repository.
 
+    git submodule update --init --recursive
+    cp -n logreview.conf.test logreview.conf
+
 Run the script.
 
     bash logreview.sh
