@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260508
+# Version 20260608
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -120,10 +120,12 @@ grepinclusion () {
 grepexclusion () {
   grep -v \
     `# TMPBLOCKS` \
-    `# RSS` -e "/blogs/RSS" -e "Yarr/1.0" -e "newsboat/" -e "RssReader" -e "RSS-Parrot-Bot" -e "NetNewsWire" -e "CapyReader" -e "maubot/rss" -e "RSS Guard" -e "FreshRSS" -e "MonitoRSS" -e "gwene.org rss-to-news" -e "SpaceCowboys Android RSS Reader" -e "Tiny Tiny RSS" -e "Akregator" -e "akregator" -e "Mastodon/" -e "Thunderbird/" -e "newspaper/" -e "URL/Emacs Emacs/" -e "Newsboat/" -e "Leaf/48 CFNetwork" -e "App-Feedmailer" \
+    `# RSS` -e "/blogs/RSS" -e "Yarr/1.0" -e "newsboat/" -e "RssReader" -e "RSS-Parrot-Bot" -e "NetNewsWire" -e "CapyReader" -e "maubot/rss" -e "RSS Guard" -e "FreshRSS" -e "MonitoRSS" -e "gwene.org rss-to-news" -e "SpaceCowboys Android RSS Reader" -e "Tiny Tiny RSS" -e "Akregator" -e "akregator" -e "Mastodon/" -e "Thunderbird/" -e "newspaper/" -e "URL/Emacs Emacs/" -e "Newsboat/" -e "Leaf/48 CFNetwork" -e "App-Feedmailer" -e "RSS Bot/" \
     `# Attempts at finding GPG/PGP keys.` -e "/.well-known/openpgpkey/" \
     `# Known good automation` -e "Uptime-Kuma/" -e "Blackbox Exporter" \
     `# Search engine Seznam` -e "SeznamBot/4.0" \
+    `# Search engine YaCy` -e "yacybot" \
+    `# Search engine mwmbl` -e "mwmbl/" \
     `# Pleroma` -e "Pleroma" \
     `# ArchiveBot` -e "ArchiveBot/" \
     `# tmp202505 kioworker?` -e "kioworker" \
