@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260608
+# Version 20260610
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -126,8 +126,9 @@ grepexclusion () {
     `# Search engine Seznam` -e "SeznamBot/4.0" \
     `# Search engine YaCy` -e "yacybot" \
     `# Search engine mwmbl` -e "mwmbl/" \
+    `# Search engine Mojeek` -e "MojeekBot/" \
     `# Pleroma` -e "Pleroma" \
-    `# ArchiveBot` -e "ArchiveBot/" \
+    `# ArchiveBot` -e "ArchiveBot/" -e "archive.org_bot" \
     `# tmp202505 kioworker?` -e "kioworker" \
     `# Mozilla` -e "DotBot/1.2" \
     `# Supposedly search engines` -e "SeekportBot" -e "rightdao.com" -e "Heexybot" -e "search.marginalia.nu" \
