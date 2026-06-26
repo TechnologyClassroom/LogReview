@@ -148,17 +148,28 @@ date
 
 echo -e "\nSearching through logs. This may take a moment..."
 
+# Snapshot the included log set once. Previously every per-IP block re-ran
+# catlog | grepinclusion, i.e. O(passes * topipcount) full reads of the logs.
+worklog="$(mktemp)"
+trap 'rm -f "$worklog"' EXIT
+catlog | grepinclusion > "$worklog"
+
+# Print only lines whose IP column ($ipcol) equals $1 exactly. Replaces
+# grep "$IP", which matched the IP as an unanchored regex and as a substring
+# (1.2.3.4 also hit 11.2.3.45 and any IP echoed in a UA/URL).
+matchip () {
+  awk -v ip="$1" ''"$ipcol"' == ip' "$worklog"
+}
+
 # Save top IP addresses and count as a variable.
-topips="$(catlog \
-  | grepinclusion \
-  | grepexclusion \
+topips="$(grepexclusion < "$worklog" \
   | awk '{ print '"$ipcol"' }' \
   | sucsn \
   | tail -n "$topipcount")"
 
 # Display top IP address.
 echo -e "\nTop $topipcount IPs:"
-echo "$(echo "$topips" | awk '{ print $2 }')"
+echo "$topips" | awk '{ print $2 }'
 
 # Display top IP address with counts.
 #echo -e "\nTop $topipcount IPs with count:"
@@ -171,14 +182,12 @@ for i in $(echo "$topips" \
   # Display hit count and IP address.
   echo -e "\nCount of IP address:"
   echo "$topips" \
-    | grep "$i" \
+    | awk -v ip="$i" '$2 == ip' \
     | tail -n 1
 
   # Show top user-agents.
   echo "Top $topuacount user-agents:"
-  catlog \
-    | grep "$i" \
-    | grepinclusion \
+  matchip "$i" \
     | awk -F'"' '{print $(NF>1?NF-1:"")}' \
     | sucsn \
     | tail -n "$topuacount"
@@ -186,29 +195,23 @@ for i in $(echo "$topips" \
   # Show last requested URLs.
   echo "Last $topurlcount requested URLs:"
   # If the request is unusual, it will be blank.
-  catlog \
-    | grep "$i" \
-    | grepinclusion \
+  matchip "$i" \
     | awk -F'"' '{print $(NF>5?NF-5:"")}' \
-    | sed "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //g;s| HTTP/.*$||g;/^$/d" \
+    | sed -E "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //;s| HTTP/.*$||;/^$/d" \
     | tail -n "$topurlcount"
 
   # Show top requested URLs.
   echo "Top $topurlcount requested URLs:"
-  catlog \
-    | grep "$i" \
-    | grepinclusion \
+  matchip "$i" \
     | awk -F'"' '{print $(NF>5?NF-5:"")}' \
-    | sed "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //g;s| HTTP/.*$||g;/^$/d" \
+    | sed -E "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //;s| HTTP/.*$||;/^$/d" \
     | sucsn \
     | tail -n "$topurlcount"
 done
 
 # Top user-agents
 echo -e "\nTop user-agents:"
-catlog \
-  | grepinclusion \
-  | grepexclusion \
+grepexclusion < "$worklog" \
   | awk -F'"' '{print $(NF>1?NF-1:"")}' \
   | sucsn \
   | tail -n "$topuatotalcount"
@@ -216,9 +219,7 @@ catlog \
 # Top user-agents with grouped versions to potentially identify random number
 # generators being used on the version value to intentionally stay undetected.
 echo -e "\nTop user-agents with grouped versions:"
-catlog \
-  | grepinclusion \
-  | grepexclusion \
+grepexclusion < "$worklog" \
   | awk -F'"' '{print $(NF>1?NF-1:"")}' \
   | `# Group randomized versions.` sed 's/\/[0-9]*\./\/wildcard\./g' \
   | sucsn \
