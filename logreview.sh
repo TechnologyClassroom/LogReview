@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260610
+# Version 20260626
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -87,9 +87,9 @@ catlog () {
 # Print all logs to work on.
 catalllog () {
   if [[ $compressiontype =~ "bz" ]]; then
-    bzcat -f "${logfile}"*
+    bzcat -f "${logfile}"
   elif [[ $compressiontype =~ "gzip" ]]; then
-    zcat -f "${logfile}"*
+    zcat -f "${logfile}"
   else
     echo "compressiontype must be set to either bz or gzip."
     exit 1
@@ -148,15 +148,14 @@ date
 
 echo -e "\nSearching through logs. This may take a moment..."
 
-# Snapshot the included log set once. Previously every per-IP block re-ran
-# catlog | grepinclusion, i.e. O(passes * topipcount) full reads of the logs.
+# Snapshot the included log set once.
 worklog="$(mktemp)"
 trap 'rm -f "$worklog"' EXIT
 catlog | grepinclusion > "$worklog"
 
-# Print only lines whose IP column ($ipcol) equals $1 exactly. Replaces
-# grep "$IP", which matched the IP as an unanchored regex and as a substring
-# (1.2.3.4 also hit 11.2.3.45 and any IP echoed in a UA/URL).
+# Print only lines whose IP column ($ipcol) equals $1 exactly. This avoids
+# matching overlapping IP addresses that would match a regular expression such
+# as 1.2.3.4 also hit 11.2.3.45 and any IP echoed in a UA/URL.
 matchip () {
   awk -v ip="$1" ''"$ipcol"' == ip' "$worklog"
 }
@@ -224,123 +223,6 @@ grepexclusion < "$worklog" \
   | `# Group randomized versions.` sed 's/\/[0-9]*\./\/wildcard\./g' \
   | sucsn \
   | tail -n "$topuatotalcount"
-
-# Disabling because I configure these to give 403 now. 20250404
-#echo -e "\nTop no UA:"
-#for i in $(catlog \
-#  | grepinclusion \
-#  | grep -E '"-"$' \
-#  | grepexclusion \
-#  | awk '{ print '"$ipcol"' }' \
-#  | sucsn \
-#  | tail -n "$topipcount" \
-#  | awk '{ print $2 }'); do
-#  echo
-#  # Display hit count and IP address.
-#  catlog \
-#    | grep "$i" \
-#    | grepinclusion \
-#    | awk '{ print '"$ipcol"' }' \
-#    | sucsn \
-#    | tail -n 1
-#  # Top user-agents
-#  catlog \
-#    | grep "$i" \
-#    | grepinclusion \
-#    | awk -F'"' '{print $(NF>1?NF-1:"")}' \
-#    | sucsn \
-#    | tail -n "$topuacount"
-#  # Last requested URLs
-#  # If the request is unusual, it will be blank.
-#  catlog \
-#    | grep "$i" \
-#    | grepinclusion \
-#    | awk -F'"' '{print $(NF>5?NF-5:"")}' \
-#    | sed "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //g;s| HTTP/.*$||g;/^$/d" \
-#    | tail -n "$topurlcount"
-#  # Top requested URLs
-#  catlog \
-#    | grep "$i" \
-#    | grepinclusion \
-#    | awk -F'"' '{print $(NF>5?NF-5:"")}' \
-#    | sed "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //g;s| HTTP/.*$||g;/^$/d" \
-#    | sucsn \
-#    | tail -n "$topurlcount"
-#done
-
-# Apache Mod Evasive
-#if [ -f /etc/apache2/mods-enabled/evasive.conf ]; then
-#  echo -e "\nTop apache2 mod evasive:"
-#  for i in $(cat /var/log/syslog \
-#    | grep "possible DoS attack" \
-#    | sed 's/^.* Blacklisting address //g;s/: possible DoS attack.$//g' \
-#    | sucsn \
-#    | awk '$1 > 1' \
-#    | tail -n "$topipcount" \
-#    | awk '{ print '"$ipcol"' }'); do
-#    echo
-#    # Display hit count and IP address.
-#    catlog \
-#      | grep "$i" \
-#      | grepinclusion \
-#      | awk '{ print '"$ipcol"' }' \
-#      | sucsn \
-#      | tail -n 1
-#    # Top user-agents
-#    catlog \
-#      | grep "$i" \
-#      | grepinclusion \
-#      | awk -F'"' '{print $(NF>1?NF-1:"")}' \
-#      | sucsn \
-#      | tail -n "$topuacount"
-#    # Last requested URLs
-#    # If the request is unusual, it will be blank.
-#    catlog \
-#      | grep "$i" \
-#      | grepinclusion \
-#      | awk -F'"' '{print $(NF>5?NF-5:"")}' \
-#      | sed "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //g;s| HTTP/.*$||g;/^$/d" \
-#      | tail -n "$topurlcount"
-#    # Top requested URLs
-#    catlog \
-#      | grep "$i" \
-#      | grepinclusion \
-#      | awk -F'"' '{print $(NF>5?NF-5:"")}' \
-#      | sed "s/^(GET|POST|DELETE|PUT|PATCH|HEAD) //g;s| HTTP/.*$||g;/^$/d" \
-#      | sucsn \
-#      | tail -n "$topurlcount"
-#  done
-#fi
-
-# WordPress abuse
-#echo -e "\nThese addresses look like they are all wordpress abuse:"
-##catalllog \
-#catlog \
-#  | grep -e "wp-includes" -e "xmlrpc.php" -e "wp-admin" \
-#  | grepinclusion \
-#  | grepexclusion \
-#  > /tmp/"$(date +%Y-%m-%d)"-wp-abuse.txt
-#awk '{ print $1 }' /tmp/"$(date +%Y-%m-%d)"-wp-abuse.txt \
-#  | sort \
-#  | uniq
-#echo -e "\nThese addresses look like they are all wordpress post abuse:"
-##catalllog \
-#catlog \
-#  | grep "wp-json/wp" \
-#  | grepinclusion \
-#  | grepexclusion \
-#  > /tmp/"$(date +%Y-%m-%d)"-wp-abuse.txt
-#awk '{ print $1 }' /tmp/"$(date +%Y-%m-%d)"-wp-abuse.txt \
-#  | sort \
-#  | uniq
-
-#echo -e "\nFell into the trap."
-##catalllog \
-#catlog \
-#  | grep "/trap/" \
-#  | grepinclusion \
-#  | grepexclusion \
-#  | sucsn
 
 # Repeat offenders from fail2ban
 if [ -f /var/log/fail2ban.log ]; then
