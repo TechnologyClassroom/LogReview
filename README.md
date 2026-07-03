@@ -1,9 +1,9 @@
 # LogReview
 
 `logreview.sh` is a script that is useful for manually reviewing logs from
-popular web servers to quickly find abuse patterns. Use
-[Occam's razor](https://en.wikipedia.org/wiki/Occam%27s_razor) first to find
-the most likely troublemakers.
+popular web servers to quickly find abuse patterns. When a web server is having
+trouble, use [Occam's razor](https://en.wikipedia.org/wiki/Occam%27s_razor)
+first to quickly find the issues that are most likely causing issues.
 
 For a visual demo of how I use LogReview in context with my other tools,
 watch my BSides CT 2025 presentation
@@ -11,10 +11,10 @@ watch my BSides CT 2025 presentation
 for a more complete picture of the process I use to thwart attacks.
 
 It is still a work-in-progress (WIP), but it is functional enough that it helps
-at this point. More complete projects include
+at this point. Similar projects that are more mature include
 [goaccess](https://github.com/allinurl/goaccess/) and
-[apachetop](https://github.com/tessus/apachetop), but this is good in some ways
-too.
+[apachetop](https://github.com/tessus/apachetop), but LogReview has proven to
+be very useful already.
 
 LogReview pairs well with my
 [firewallblockgen](https://github.com/TechnologyClassroom/firewallblockgen/)
@@ -40,7 +40,7 @@ LogReview may not help when...
   patterns here.
 * ...large files are used to hog bandwidth. apachetop or GoAccess help here.
 * ...one is looking for a general metrics and analytics solution.
-* ...slowloris attacks are used.
+* ...slowloris attacks are used that intentionally avoid logs.
 
 ## How to use logreview.sh
 
@@ -67,7 +67,7 @@ which column the IPs are located.
 
 If you do not have any logs, you can use simulated data I made in the
 [web-server-mock-data](https://github.com/TechnologyClassroom/web-server-mock-data)
-repository.
+repository for testing and development.
 
     git submodule update --init --recursive
     cp -n logreview.conf.test logreview.conf
@@ -88,7 +88,7 @@ Change to the directory where logreview lives.
 
     cd logreview
 
-Stash you changes if you made any.
+Stash any changes you may have made.
 
     git stash
 
@@ -100,7 +100,7 @@ Place your changes back.
 
     git stash pop
 
-If there is a merge conflict, resolve it.
+If there is a merge conflict, resolve it by editing the relevant file.
 
 Run the new version of the script.
 
@@ -306,15 +306,18 @@ Starting with the last entry `192.168.1.12` is a vulnerability scanner of some
 sort scanning for archives that are not linked from the site. The address can
 and should be blocked. This is not the problem with the site though because
 these are light `HEAD` requests. If you find any file extensions from scanners
-like that that you never use, you can add them to your `fail2ban` or `reaction`
-configuration. For example, if a scan searches for `.rar` files and you only
-use `.zip` and `.tar.gz` archives, you can ban addresses that try to download
-`.rar` files. I left the requests for only this entry mostly unredacted, but I
-did leave out some identifying information that would reveal the domain.
+like that that you never use, you can add a rule to your `reaction` or
+`fail2ban` configuration. For example, if a scan searches for `.rar` files and
+you only use `.zip` and `.tar.gz` archives, you can ban addresses that try to
+download `.rar` files. I left the requests for only this entry mostly
+unredacted, but I did leave out some identifying information that would reveal
+the domain.
 
 The 2nd, 3rd, 4th, 6th, 8th, 9th, 10th most frequent IPs all follow the same
 crawler pattern. This is the problem the server faced and must be stopped
-through automation. `Chrome/120.0.0.0` was released in late 2023 and at the
+through automation. You can add a rule to your `reaction` or `fail2ban`
+configuration to block either a string specific to the attack or all Chrome
+versions through 120. `Chrome/120.0.0.0` was released in late 2023 and at the
 time of this writing in 2026 is about 2 and a half years old. On Windows and
 macOS systems, Chrome is kept automatically updated to the latest release so
 that is suspicious. The same addresses use equal parts Windows, macOS, and
@@ -328,7 +331,10 @@ find out more about where the requests are coming from.
 
 The 5th and 7th most frequent IPs is allegedly Amazon Quick. I would suggest
 adding a filter in the web server configuration to return a 403 when the
-user-agent matches the `^amazon-Quick-on-behalf-of-.*$` pattern.
+user-agent matches the `^amazon-Quick-on-behalf-of-.*$` pattern. You can add a
+rule to your `reaction` or `fail2ban` configuration to block their user-agent.
+Some bots listen to `robots.txt` file directives, but I could not find any
+information about this particular bot.
 
 Looking at the `Top user-agents:` and `Top user-agents with grouped versions:`
 sections is not all that interesting with this example, but it can be. These
@@ -347,7 +353,9 @@ latest release so these are very suspicious.
 [imperva's 2025 Bad Bot Report](https://www.imperva.com/resources/wp-content/uploads/sites/6/reports/2025-Bad-Bot-Report.pdf)
 on page 34 recomends blocking user-agents of browsers that have been
 end-of-life for more than three years and giving a CAPTCHA to user-agents of
-browsers that have been end-of-life for more than two years.
+browsers that have been end-of-life for more than two years. You can add a rule
+to your `reaction` or `fail2ban` configuration to block either a string
+specific to the attack or all Chrome versions up to three years ago.
 
 Make sure you do not take action against automation that you are running on
 your own site like the site monitoring processes that you may be running
@@ -392,7 +400,7 @@ After taking action or recognizing known behavior, you can add addresses to the
   - Common Crawl (CCBot) is an attempt at crawling the entire web collectively
     so that every single company crawling the web could stop and just download
     the latest Common Crawl archive. Having one bot hit your site would be
-    better than having dozens hit your site right? Reality is a bit different,
+    better than having dozens hit your site, right? Reality is a bit different,
     but the concept is nice. I allow it.
 
 - If a specific version of a web browser is the top user-agent by a significant
