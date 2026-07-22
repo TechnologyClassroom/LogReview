@@ -57,7 +57,7 @@ Change to the directory.
 Copy the template configuration file the first time you are configuring
 LogReview.
 
-    cp -n logreview.conf.defaults logreview.conf
+    cp --update=none logreview.conf.defaults logreview.conf
 
 Change the config file to match your log the first time you are configuring
 LogReview. The config needs to point to the web server log file and specify
