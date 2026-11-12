@@ -9,12 +9,16 @@ from my Issue Tracker handy.
 This directory is a backup of my issue tracker and comments. This may not be
 the most accurate, up-to-date copy.
 
-## How was this created?
+## How was this directory created?
 
-[mattduck/gh2md](https://github.com/mattduck/gh2md) works for this as of
-2026-09-30.
+Manually syncing these issues would be a waste of time.
 
-### Installing gh2md
+### gh2md
+
+[gh2md](https://github.com/mattduck/gh2md) is a python script that can download
+GitHub issues. This works for downloading issues as of 2026-09-30.
+
+#### Installing gh2md
 
 On a Debian system, you can install `pipx` with these commands:
 
@@ -25,7 +29,7 @@ Install `gh2md` with pipx using this command:
 
     pipx install gh2md
 
-### Creating a GitHub access token
+#### Creating a GitHub access token
 
 * [Login](https://github.com/login) to [GitHub](https://github.com/).
 * Click on your profile icon in the top-right and select the
@@ -41,7 +45,7 @@ Install `gh2md` with pipx using this command:
 * Copy the token to your password manager.
 * Add the token to the `~/.config/gh2md/token` file.
 
-### Pulling issues
+#### Pulling issues with gh2md
 
 You can pull all open issues for repositories with these commands:
 
@@ -49,4 +53,58 @@ You can pull all open issues for repositories with these commands:
     gh2md technologyclassroom/logreview logreview/doc/issues --multiple-files --no-prs --no-closed-issues
     gh2md technologyclassroom/webserverwatcher webserverwatcher/doc/issues --multiple-files --no-prs --no-closed-issues
 
-You can add them to git from this point.
+### Removing the img tag
+
+The issues include images which is nice if browsed by a markdown viewer
+connected to the Internet, but this is not helpful and extra noise for me in
+this case.
+
+#### sed
+
+Initially, I expected more complexity and I looked into strip_tags, but this
+job is really simple. `sed` is enough. I am keeping the strip_tags
+documentation in case I need something more thorough in the future.
+
+Change to the issues directory.
+
+    cd doc/issues
+
+Run a simple for loop.
+
+    for i in $(ls 20*md); do echo "$i" && sed -i 's/<img.*>//' "$i" ; done
+
+#### strip_tags
+
+[strip_tags](https://github.com/Open-Technology-Foundation/strip_tags) is a set
+of scripts that can remove HTML tags from a file.
+
+#### Installing strip_tags
+
+There are Python, Bash, and C versions of this script. For this simple job, the
+BASH version that depends on sed is more than we need.
+
+Download the script.
+
+    wget https://github.com/Open-Technology-Foundation/strip_tags/raw/refs/heads/main/strip_tags.bash
+
+Make sure it is what it says it is. Press `q` when you are done.
+
+    less strip_tags.bash
+
+Place the script in a place that is in your path.
+
+    mv strip_tags.bash ~/.local/bin/strip_tags
+
+Make the script executable.
+
+    chmod +x ~/.local/bin/strip_tags
+
+#### Stripping tags with strip_tags
+
+Change to the issues directory.
+
+    cd doc/issues
+
+Run a simple for loop.
+
+    for i in $(ls 20*md); do echo $i && strip_tags "$i" > "$i"2 && mv "$i"2 "$i" ; done
