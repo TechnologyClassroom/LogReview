@@ -59,21 +59,9 @@ The issues include images which is nice if browsed by a markdown viewer
 connected to the Internet, but this is not helpful and extra noise for me in
 this case.
 
-#### sed
-
-Initially, I expected more complexity and I looked into strip_tags, but this
-job is really simple. `sed` is enough. I am keeping the strip_tags
-documentation in case I need something more thorough in the future.
-
-Change to the issues directory.
-
-    cd doc/issues
-
-Run a simple for loop.
-
-    for i in $(ls 20*md); do echo "$i" && sed -i 's/<img.*>//' "$i" ; done
-
 #### strip_tags
+
+See the sed section.
 
 [strip_tags](https://github.com/Open-Technology-Foundation/strip_tags) is a set
 of scripts that can remove HTML tags from a file.
@@ -105,6 +93,38 @@ Change to the issues directory.
 
     cd doc/issues
 
-Run a simple for loop.
+Run a simple for loop with an intermediary file.
 
     for i in $(ls 20*md); do echo $i && strip_tags "$i" > "$i"2 && mv "$i"2 "$i" ; done
+
+#### sed
+
+Initially, I expected more complexity and I looked into strip_tags, but this
+job is really simple. `sed` is enough. I am keeping the strip_tags
+documentation in case I need something more thorough in the future.
+
+Change to the issues directory.
+
+    cd doc/issues
+
+Run a simple for loop to remove the image tag.
+
+    for i in $(ls 20*md); do echo "$i" && sed -i 's/<img.*>//' "$i" ; done
+
+Work-in-progress sed command to clean up the issues.
+
+    sed -E 's/^\[//g;s/\]$//g;s/\[([^]]+)\]\(([^)]+)\)/\1/g;s/Issue \d96op/\d96op/g;s/\# \\\#/\# Issue /g' issuefilename
+
+Sed explanations.
+
+`s/^\[//g;s/\]$//g` removes the leading and trailing brackets found in the last line.
+
+`s/\[([^]]+)\]\(([^)]+)\)/\1/g` removes the markdown links.
+
+`s/Issue \d96op/\d96op/g;s/\# \\\#/\# Issue /g` replaces "# \#1 Issue `open`" with "# Issue 1 `open`"
+
+This is a simple for loop with a complex chain of sed commands to reformat the
+issues. I struggled a bit to make this work in-place so I made an intermediary
+file.
+
+    for i in $(ls 20*md); do echo $i && sed -E 's/^\[//g;s/\]$//g;s/\[([^]]+)\]\(([^)]+)\)/\1/g;s/Issue \d96op/\d96op/g;s/\# \\\#/\# Issue /g' "$i" > "$i"2 && mv "$i"2 "$i"; done
