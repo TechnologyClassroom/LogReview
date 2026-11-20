@@ -5,7 +5,7 @@
 # addresses, their user-agents, and the URLs that they visited. LogReview is
 # useful for quickly finding what behavior might be slowing down popular web
 # servers.
-# Version 20260626
+# Version v0.3.0
 #
 # Copyright (C) 2024-2026 Michael McMahon
 #
@@ -208,6 +208,8 @@ for i in $(echo "$topips" \
     | tail -n "$topurlcount"
 done
 
+echo -e "\nSearching through logs. This may take a moment..."
+
 # Top user-agents
 echo -e "\nTop user-agents:"
 grepexclusion < "$worklog" \
@@ -242,6 +244,7 @@ if [ -f /var/log/fail2ban.log ]; then
 fi
 
 # Print the date.
+echo
 date
 
 exit 0
